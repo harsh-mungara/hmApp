@@ -10,6 +10,7 @@ import {
   StatusBar,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -76,46 +77,52 @@ class CreateGroup extends React.Component {
   };
 
   onSave = async () => {
-    const admindata = [];
-    const storeData = await AsyncStorage.getItem('userData');
-    let userdata = await JSON.parse(storeData);
-    admindata.push(userdata);
-    const chatIDpre = [];
-    chatIDpre.push(this.state.firstId);
-    chatIDpre.push(userdata.userId.substring(0, 3));
-    chatIDpre.push(new Date().getTime());
-    chatIDpre.sort();
-    const roomId = chatIDpre.join('_');
+    if (this.state.groupName.length > 0) {
+      const admindata = [];
+      const storeData = await AsyncStorage.getItem('userData');
+      let userdata = await JSON.parse(storeData);
+      admindata.push(userdata);
+      const chatIDpre = [];
+      chatIDpre.push(this.state.firstId);
+      chatIDpre.push(userdata.userId.substring(0, 3));
+      chatIDpre.push(new Date().getTime());
+      chatIDpre.sort();
+      const roomId = chatIDpre.join('_');
 
-    const newHeader = [...this.state.header];
-    const resInner = [];
-    newHeader.map(async item => {
-      this.state.users.forEach(singleUser => {
-        if (singleUser.uid === item) {
-          resInner.push(singleUser);
-        }
+      const newHeader = [...this.state.header];
+      const resInner = [];
+      newHeader.map(async item => {
+        this.state.users.forEach(singleUser => {
+          if (singleUser.uid === item) {
+            resInner.push(singleUser);
+          }
+        });
+        resInner.push(userdata);
+        const unique = [
+          ...new Map(
+            resInner.map(itemData => [itemData.uid, itemData]),
+          ).values(),
+        ];
+
+        firebase
+          .firestore()
+          .collection('groups')
+          .doc(roomId)
+          .set({
+            users: unique,
+            groupName: this.state.groupName,
+            admin: admindata,
+            groupId: roomId,
+          })
+          .then(res => {
+            this.props.navigation.goBack();
+            this.getNotification();
+          })
+          .catch(e => console.log({e}));
       });
-      resInner.push(userdata);
-      const unique = [
-        ...new Map(resInner.map(itemData => [itemData.uid, itemData])).values(),
-      ];
-
-      firebase
-        .firestore()
-        .collection('groups')
-        .doc(roomId)
-        .set({
-          users: unique,
-          groupName: this.state.groupName,
-          admin: admindata,
-          groupId: roomId,
-        })
-        .then(res => {
-          this.props.navigation.goBack();
-          this.getNotification();
-        })
-        .catch(e => console.log({e}));
-    });
+    } else {
+      Alert.alert('Please enter group name to create any group.');
+    }
   };
 
   getNotification = async index => {
