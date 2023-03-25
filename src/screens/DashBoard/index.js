@@ -83,58 +83,61 @@ class ListScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <SafeAreaView>
-          <StatusBar />
-          <ScrollView>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.inputText}
-                placeholder="Find your friend.."
-                placeholderTextColor="#003f5c"
-                onChangeText={text => this.filteredGroups(text)}
-              />
-            </View>
-            <View style={styles.container}>
-              <FlatList
-                data={this.state.users}
-                keyExtractor={item => item.uid}
-                renderItem={({item}) => (
-                  <View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.props.navigation.navigate('ChatScreen', {
-                          name: item.email,
-                          uid: item.uid,
-                          currentUserName: this.state.currentUserData.email,
-                          currentUserId: this.state.currentUserData.userId,
-                        })
-                      }
-                      style={styles.listContainer}>
-                      <Image
-                        style={styles.listImg}
-                        source={{
-                          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi3BmGBVk6AshoiBA4TrUUIEoSyTGj4iY9MA&usqp=CAU',
-                        }}
-                      />
-                      <View style={styles.listView}>
-                        <Text style={styles.listTxt} numberOfLines={1}>
-                          {item.email}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    <View style={styles.deviderView} />
-                  </View>
-                )}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={this.state.onRefresh}
-                    onRefresh={() => this._onRefresh()}
-                  />
-                }
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Find your friend.."
+            placeholderTextColor="#003f5c"
+            onChangeText={text => this.filteredGroups(text)}
+          />
+        </View>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.onRefresh}
+              onRefresh={() => this._onRefresh()}
+            />
+          }>
+          <View style={styles.container}>
+            <FlatList
+              data={this.state.users}
+              keyExtractor={item => item.uid}
+              renderItem={({item}) => (
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('ChatScreen', {
+                        name: item.email,
+                        uid: item.uid,
+                        currentUserName: this.state.currentUserData.email,
+                        currentUserId: this.state.currentUserData.userId,
+                      })
+                    }
+                    style={styles.listContainer}>
+                    <Image
+                      style={styles.listImg}
+                      source={{
+                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi3BmGBVk6AshoiBA4TrUUIEoSyTGj4iY9MA&usqp=CAU',
+                      }}
+                    />
+                    <View style={styles.listView}>
+                      <Text style={styles.listTxt} numberOfLines={1}>
+                        {item.email}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <View style={styles.deviderView} />
+                </View>
+              )}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.onRefresh}
+                  onRefresh={() => this._onRefresh()}
+                />
+              }
+            />
+          </View>
+        </ScrollView>
       </View>
     );
   }

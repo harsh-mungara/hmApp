@@ -107,45 +107,53 @@ class GroupListScreen extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.container}>
-            <FlatList
-              data={this.state.groupData}
-              ListHeaderComponent={() => {
-                return <View style={styles.deviderView} />;
-              }}
-              renderItem={({item}) => (
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('GroupChatScreen', {
-                        groupName: item.groupName,
-                        currentUserName: this.state.currentUserData.email,
-                        currentUserId: this.state.currentUserData.userId,
-                        groupId: item.groupId,
-                      })
-                    }
-                    style={styles.listContainer}>
-                    <Image
-                      style={styles.listImg}
-                      source={{
-                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi3BmGBVk6AshoiBA4TrUUIEoSyTGj4iY9MA&usqp=CAU',
-                      }}
-                    />
-                    <View style={styles.listView}>
-                      <Text style={styles.listTxt} numberOfLines={1}>
-                        {item.groupName}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <View style={styles.deviderView} />
-                </View>
-              )}
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.onRefresh}
-                  onRefresh={() => this._onRefresh()}
-                />
-              }
-            />
+            {this.state.groupData.length === 0 ? (
+              <View style={styles.emptyListView}>
+                <Text style={styles.emptyListTxt}>
+                  {'Create a group to enjoy chatting with your friends.'}
+                </Text>
+              </View>
+            ) : (
+              <FlatList
+                data={this.state.groupData}
+                // ListHeaderComponent={() => {
+                //   return <View style={styles.deviderView} />;
+                // }}
+                renderItem={({item}) => (
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate('GroupChatScreen', {
+                          groupName: item.groupName,
+                          currentUserName: this.state.currentUserData.email,
+                          currentUserId: this.state.currentUserData.userId,
+                          groupId: item.groupId,
+                        })
+                      }
+                      style={styles.listContainer}>
+                      <Image
+                        style={styles.listImg}
+                        source={{
+                          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi3BmGBVk6AshoiBA4TrUUIEoSyTGj4iY9MA&usqp=CAU',
+                        }}
+                      />
+                      <View style={styles.listView}>
+                        <Text style={styles.listTxt} numberOfLines={1}>
+                          {item.groupName}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <View style={styles.deviderView} />
+                  </View>
+                )}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.onRefresh}
+                    onRefresh={() => this._onRefresh()}
+                  />
+                }
+              />
+            )}
           </View>
         </ScrollView>
       </View>
@@ -213,6 +221,7 @@ const styles = StyleSheet.create({
   headerView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginVertical: hp(2),
   },
   headerImgView: {
     width: wp(8),
@@ -223,7 +232,16 @@ const styles = StyleSheet.create({
   headerImg: {
     width: wp('5%'),
     height: wp('5%'),
-    tintColor: 'gray',
+    tintColor: 'black',
     alignSelf: 'center',
+  },
+  emptyListView: {
+    width: '100%',
+    marginLeft: wp(5),
+    alignItems: 'center',
+  },
+  emptyListTxt: {
+    maxWidth: '90%',
+    color: 'black',
   },
 });

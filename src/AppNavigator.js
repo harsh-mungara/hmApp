@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet, Text} from 'react-native';
 import SplashScreen from './screens/SplashScreen';
 import AuthScreen from './screens/AuthScreen/AuthScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -35,12 +35,13 @@ const NavigationDrawerStructure = props => {
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity onPress={() => toggleDrawer()}>
         <Image
-          source={{
-            uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
-          }}
-          style={{width: 25, height: 25, marginLeft: 5}}
+          source={require('./assets/images/ic_bubblePop.png')}
+          style={{width: 25, height: 25, marginLeft: 5, tintColor: 'white'}}
         />
       </TouchableOpacity>
+      <Text style={{fontSize: wp(5), color: 'white', marginHorizontal: wp(3)}}>
+        {'H&M App'}
+      </Text>
     </View>
   );
 };
@@ -104,7 +105,7 @@ const HomeScreenStack = ({navigation}) => {
   return (
     <Stack.Navigator initialRouteName="HomeScreen">
       <Stack.Screen
-        name="H&M App"
+        name=" "
         component={BottomTabStack}
         options={({route}) => ({
           headerLeft: () => (
