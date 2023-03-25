@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "498828534271",
+    "project_id": "harshdemo-e8691",
+    "storage_bucket": "harshdemo-e8691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498828534271:android:eb6b074ee8b4bb29a407ca",
+        "android_client_info": {
+          "package_name": "com.harshdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498828534271-96oj9ga8292fav5m6oqrtkr521t5cj0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG64TqRGjCj-DyeNKTSO4S3elrJI51qds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498828534271-96oj9ga8292fav5m6oqrtkr521t5cj0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498828534271:android:a059b152aced0ae6a407ca",
+        "android_client_info": {
+          "package_name": "com.hmapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498828534271-96oj9ga8292fav5m6oqrtkr521t5cj0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG64TqRGjCj-DyeNKTSO4S3elrJI51qds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498828534271-96oj9ga8292fav5m6oqrtkr521t5cj0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
