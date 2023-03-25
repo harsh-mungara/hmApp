@@ -2,6 +2,8 @@
 # Project setup
 - ### Clone the repo  
         git clone https://github.com/harsh-mungara/hmApp.git
+ - ### checkout master branch (up to date)
+        git checkout dev
 - ### checkout dev branch (development)
         git checkout dev
 - ### install modules
