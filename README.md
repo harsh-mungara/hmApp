@@ -14,10 +14,15 @@
 
 - ### Project Modules & Flow:
         Firebase email authentication used for signup & login.
+        TMDB movies list with current showing & polular movies.
+        Add to favourite movie & remove movie using realm.
+        Movie description screen with youtube video player. 
         For single & group chat firebase firestore has been used.
         Search functionality implemented for single user & groups.
         After sigin/signup & After creating any group push notification is being send using react-native-push-notification.
 
 
-https://user-images.githubusercontent.com/128880754/227698032-a83d6686-b1af-40bc-a13a-63f6808e947d.mov
+
+
+https://user-images.githubusercontent.com/128880754/232227997-88962561-a5bb-43c9-a8fc-ec23fe1f2a9b.mp4
 
