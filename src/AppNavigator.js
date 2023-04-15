@@ -12,6 +12,9 @@ import ChatScreen from '@chatScreen';
 import GroupListScreen from '@groupListScreen';
 import CreateGroup from '@groupListScreen/CreateGroup';
 import GroupChatScreen from '@groupChatScreen';
+import HomeScreen from '@homeScreen';
+import MovieScreen from '@movieScreen';
+import FavouriteScreen from '@favouriteScreen';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -32,43 +35,62 @@ const NavigationDrawerStructure = props => {
   };
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={styles.drawerHeader}>
       <TouchableOpacity onPress={() => toggleDrawer()}>
         <Image
           source={require('./assets/images/ic_bubblePop.png')}
-          style={{width: 25, height: 25, marginLeft: 5, tintColor: 'white'}}
+          style={styles.headerIcon}
         />
       </TouchableOpacity>
-      <Text style={{fontSize: wp(5), color: 'white', marginHorizontal: wp(3)}}>
-        {'H&M App'}
-      </Text>
+      <Text style={styles.headerTxt}>{'H&M App'}</Text>
+      <View>
+        <Image
+          source={require('./assets/images/notification.png')}
+          style={styles.notiIcon}
+        />
+      </View>
     </View>
   );
+};
+
+const tabIcon = route => {
+  if (route.name === 'Home') {
+    return (
+      <Image
+        style={styles.tabImg}
+        source={require('./assets/images/video-vertical.png')}
+      />
+    );
+  } else if (route.name === 'FavouriteScreen') {
+    return (
+      <Image
+        style={styles.tabImg}
+        source={require('./assets/images/user-octagon.png')}
+      />
+    );
+  } else if (route.name === 'Dashboard') {
+    return (
+      <Image
+        style={styles.tabImg}
+        source={require('./assets/images/ic_chat.png')}
+      />
+    );
+  } else if (route.name === 'Group') {
+    return (
+      <Image
+        style={styles.tabImg}
+        source={require('./assets/images/ic_copy.png')}
+      />
+    );
+  }
 };
 
 const BottomTabStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="Home"
       screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-          if (route.name === 'Dashboard') {
-            return (
-              <Image
-                style={styles.tabImg}
-                source={require('./assets/images/ic_chat.png')}
-              />
-            );
-          } else if (route.name === 'Group') {
-            return (
-              <Image
-                style={styles.tabImg}
-                source={require('./assets/images/ic_copy.png')}
-              />
-            );
-          }
-        },
+        tabBarIcon: ({}) => tabIcon(route),
       })}
       tabBarOptions={{
         activeTintColor: 'tomato',
@@ -81,6 +103,22 @@ const BottomTabStack = () => {
           fontSize: wp(4),
         },
       }}>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="FavouriteScreen"
+        component={FavouriteScreen}
+        options={{
+          tabBarLabel: 'Favourite',
+          headerShown: false,
+        }}
+      />
       <Tab.Screen
         name="Dashboard"
         component={Dashboard}
@@ -111,9 +149,8 @@ const HomeScreenStack = ({navigation}) => {
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: 'white',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -184,6 +221,11 @@ const AuthStackNavigator = () => (
       component={GroupChatScreen}
       options={{gestureEnabled: false, headerShown: false}}
     />
+    <AuthStack.Screen
+      name="MovieScreen"
+      component={MovieScreen}
+      options={{gestureEnabled: false, headerShown: false}}
+    />
   </AuthStack.Navigator>
 );
 
@@ -206,6 +248,30 @@ const styles = StyleSheet.create({
     width: wp(6),
     height: wp(6),
     alignSelf: 'center',
+    tintColor: 'black',
+  },
+  notiIcon: {
+    width: wp(6),
+    height: wp(6),
+    marginLeft: 5,
+    tintColor: 'black',
+    resizeMode: 'contain',
+  },
+  drawerHeader: {
+    flexDirection: 'row',
+    width: '95%',
+    justifyContent: 'space-between',
+  },
+  headerIcon: {
+    width: wp(6),
+    height: wp(6),
+    tintColor: 'black',
+    resizeMode: 'contain',
+  },
+  headerTxt: {
+    fontSize: wp(5),
+    color: 'black',
+    marginHorizontal: wp(3),
   },
 });
 export default AppNavigator;

@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -17,6 +18,9 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {get} from 'lodash';
+import Realm from 'realm';
+
+let realm;
 
 const CustomDrawerScreen = props => {
   const navigation = useNavigation();
@@ -29,9 +33,40 @@ const CustomDrawerScreen = props => {
       const username = get(userdata, 'email');
       setUsername(username);
     };
+    realm = new Realm({
+      path: 'UserDatabase.realm',
+      deleteRealmIfMigrationNeeded: true,
+    });
 
     fetchData();
   }, [username]);
+
+  const onLogout = () => {
+    Alert.alert(
+      'Logout!',
+      'Your all favourite item will be removed from the list!.',
+      [
+        {
+          text: 'Ok',
+          onPress: async () => {
+            await AsyncStorage.removeItem('userData');
+            realm.write(() => {
+              realm.deleteAll();
+            });
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'AuthStack'}],
+            });
+          },
+        },
+        {
+          text: 'Cancle',
+          onPress: () => {},
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,13 +81,7 @@ const CustomDrawerScreen = props => {
 
         <DrawerItemList {...props} />
         <TouchableOpacity
-          onPress={async () => {
-            await AsyncStorage.removeItem('userData');
-            navigation.reset({
-              index: 0,
-              routes: [{name: 'AuthStack'}],
-            });
-          }}
+          onPress={async () => onLogout()}
           style={styles.customItem}>
           <Text style={styles.footerView}>Log out</Text>
         </TouchableOpacity>

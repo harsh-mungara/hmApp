@@ -26,6 +26,21 @@ export default class SignUpScreen extends React.Component {
     isLoading: false,
   };
 
+  componentDidMount() {
+    PushNotification.createChannel(
+      {
+        channelId: '123',
+        channelName: 'Harsh Demo',
+        channelDescription: 'A channel to categorise your notifications',
+        playSound: false,
+        soundName: 'default',
+        importance: 4,
+        vibrate: true,
+      },
+      created => console.log(`createChannel returned '${created}'`),
+    );
+  }
+
   handleSignUp = () => {
     this.setState({isLoading: true});
     if (this.state.password !== this.state.cPassword) {
@@ -61,19 +76,6 @@ export default class SignUpScreen extends React.Component {
   };
 
   getNotification = async index => {
-    PushNotification.createChannel(
-      {
-        channelId: '123',
-        channelName: 'Harsh Demo',
-        channelDescription: 'A channel to categorise your notifications',
-        playSound: false,
-        soundName: 'default',
-        importance: 4,
-        vibrate: true,
-      },
-      created => console.log(`createChannel returned '${created}'`),
-    );
-
     PushNotification.localNotification({
       autoCancel: true,
       bigText: 'Congratulations, Your signup has been done.',

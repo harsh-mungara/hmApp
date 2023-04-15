@@ -24,7 +24,7 @@ const SplashScreen = () => {
           routes: [{name: 'SignUpScreen'}],
         });
       }
-    }, 1000);
+    }, 100);
   }, []);
 
   return (
