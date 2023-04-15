@@ -50,13 +50,12 @@ class CreateGroup extends React.Component {
       .where('uid', '!=', currentUser)
       .get();
     const allUsers = querySanp.docs.map(docSnap => docSnap.data());
-    console.log('AUTH::', allUsers);
+
     this.setState({users: allUsers});
   };
 
   handleItemClick = async nameId => {
     let newheader = [...this.state.header];
-    console.log('PRESS');
     if (newheader.includes(nameId)) {
       newheader = newheader.filter(_id => _id !== nameId);
     } else if (this.state.header === nameId) {
@@ -118,7 +117,7 @@ class CreateGroup extends React.Component {
             this.props.navigation.goBack();
             this.getNotification();
           })
-          .catch(e => console.log({e}));
+          .catch(e => {});
       });
     } else {
       Alert.alert('Please enter group name to create any group.');
@@ -194,6 +193,7 @@ class CreateGroup extends React.Component {
             <View style={styles.container}>
               <FlatList
                 data={this.state.users}
+                contentContainerStyle={styles.listBottom}
                 keyExtractor={item => item.uid}
                 renderItem={({item}) => (
                   <View>
@@ -234,8 +234,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   ParentView: {
     width: wp(45),
@@ -301,5 +299,8 @@ const styles = StyleSheet.create({
   cbView: {
     height: hp(3),
     backgroundColor: 'white',
+  },
+  listBottom: {
+    marginBottom: hp(10),
   },
 });

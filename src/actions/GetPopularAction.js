@@ -30,7 +30,7 @@ export function getAllPopularFilm(callback) {
   return dispatch => {
     dispatch(get_cards_fetch());
     get(
-      `${BASE_URL}/movie/popular?api_key=f1c608a1f3f43029a5c115c0d9422a62&language=en-US&page=2`,
+      `${BASE_URL}/movie/popular?api_key=f1c608a1f3f43029a5c115c0d9422a62&language=en-US&page=10`,
       {},
       response => {
         if (response === undefined) {

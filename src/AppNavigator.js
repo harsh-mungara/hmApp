@@ -72,7 +72,7 @@ const tabIcon = route => {
     return (
       <Image
         style={styles.tabImg}
-        source={require('./assets/images/ic_chat.png')}
+        source={require('./assets/images/message_square.png')}
       />
     );
   } else if (route.name === 'Group') {

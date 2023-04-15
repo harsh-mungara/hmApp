@@ -36,7 +36,6 @@ export default class AuthScreen extends React.Component {
         //   email: this.state.email,
         //   uid: userId
         // })
-        console.log('current user : ', auth);
         const user = {
           ['email']: res.user.email,
           ['userId']: res.user.uid,
@@ -51,7 +50,6 @@ export default class AuthScreen extends React.Component {
         this.getNotification();
       })
       .catch(error => {
-        console.log({error});
         Alert.alert('Please Sign Up');
       });
   };

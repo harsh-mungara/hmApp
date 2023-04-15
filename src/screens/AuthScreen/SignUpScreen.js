@@ -61,7 +61,6 @@ export default class SignUpScreen extends React.Component {
           AsyncStorage.setItem('userData', JSON.stringify(user));
           const storeData = await AsyncStorage.getItem('userData');
           const getItem = JSON.parse(storeData);
-          console.log('asyncDa--', getItem);
           this.props.navigation.reset({
             index: 0,
             routes: [{name: 'DrawerScreen'}],
@@ -70,7 +69,6 @@ export default class SignUpScreen extends React.Component {
         })
         .catch(error => {
           Alert.alert('Failure', error.message);
-          console.log('error-->', error.message);
         });
     }
   };
