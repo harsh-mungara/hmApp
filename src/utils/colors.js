@@ -84,5 +84,13 @@ const colors = {
   faunaColor2: 'rgb(212,222,81)',
 
   linkColor: '#630d94',
+  themebg: '#080a14',
+  blue10: '#7782ff',
+  navyBlue10: '#0f1239',
+  lightBlue: '#45FEF1',
+  black10: '#1F1F1F',
+  navy100: '#3D3F49',
+  blue100: '#6371FF',
+  navy10: '#050A30',
 };
 export default colors;

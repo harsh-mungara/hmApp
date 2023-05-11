@@ -15,6 +15,7 @@ import GroupChatScreen from '@groupChatScreen';
 import HomeScreen from '@homeScreen';
 import MovieScreen from '@movieScreen';
 import FavouriteScreen from '@favouriteScreen';
+import ExploreScreen from '@exploreScreen';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -22,6 +23,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import colors from './utils/colors';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -42,7 +44,7 @@ const NavigationDrawerStructure = props => {
           style={styles.headerIcon}
         />
       </TouchableOpacity>
-      <Text style={styles.headerTxt}>{'H&M App'}</Text>
+      {/* <Text style={styles.headerTxt}>{'H&M App'}</Text> */}
       <View>
         <Image
           source={require('./assets/images/notification.png')}
@@ -54,32 +56,25 @@ const NavigationDrawerStructure = props => {
 };
 
 const tabIcon = route => {
-  if (route.name === 'Home') {
+  if (route.name === 'ExploreScreen') {
     return (
       <Image
         style={styles.tabImg}
         source={require('./assets/images/video-vertical.png')}
       />
     );
-  } else if (route.name === 'FavouriteScreen') {
+  } else if (route.name === 'Loan') {
     return (
       <Image
         style={styles.tabImg}
         source={require('./assets/images/user-octagon.png')}
       />
     );
-  } else if (route.name === 'Dashboard') {
+  } else if (route.name === 'Profile') {
     return (
       <Image
         style={styles.tabImg}
-        source={require('./assets/images/message_square.png')}
-      />
-    );
-  } else if (route.name === 'Group') {
-    return (
-      <Image
-        style={styles.tabImg}
-        source={require('./assets/images/ic_copy.png')}
+        source={require('./assets/images/user-octagon.png')}
       />
     );
   }
@@ -88,51 +83,47 @@ const tabIcon = route => {
 const BottomTabStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="ExploreScreen"
       screenOptions={({route}) => ({
         tabBarIcon: ({}) => tabIcon(route),
+        tabBarStyle: {borderTopWidth: 1},
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
+        activeTintColor: colors.lightBlue,
         inactiveTintColor: 'gray',
-        style: {
-          backgroundColor: '#e0e0e0',
-        },
         labelStyle: {
           textAlign: 'center',
           fontSize: wp(4),
         },
       }}>
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="ExploreScreen"
+        component={ExploreScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Explore',
           headerShown: false,
+          tabBarActiveBackgroundColor: colors.navy10,
+          tabBarInactiveBackgroundColor: colors.navy10,
         }}
       />
       <Tab.Screen
-        name="FavouriteScreen"
-        component={FavouriteScreen}
+        name="Loan"
+        component={ExploreScreen}
         options={{
-          tabBarLabel: 'Favourite',
+          tabBarLabel: 'Loan',
           headerShown: false,
+          tabBarActiveBackgroundColor: colors.navy10,
+          tabBarInactiveBackgroundColor: colors.navy10,
         }}
       />
       <Tab.Screen
-        name="Dashboard"
-        component={Dashboard}
+        name="Profile"
+        component={ExploreScreen}
         options={{
-          tabBarLabel: 'Chat',
+          tabBarLabel: 'Profile',
           headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Group"
-        component={GroupListScreen}
-        options={{
-          tabBarLabel: 'Group',
-          headerShown: false,
+          tabBarActiveBackgroundColor: colors.navy10,
+          tabBarInactiveBackgroundColor: colors.navy10,
         }}
       />
     </Tab.Navigator>
@@ -150,7 +141,7 @@ const HomeScreenStack = ({navigation}) => {
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
           headerStyle: {
-            backgroundColor: 'white',
+            backgroundColor: colors.navy10,
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -174,6 +165,16 @@ const DrawerStack = () => {
         name="HomeScreenStack"
         options={{drawerLabel: 'Home Screen', headerShown: false}}
         component={HomeScreenStack}
+      />
+      <Drawer.Screen
+        name="ChatScreenStack"
+        options={{drawerLabel: 'Chat Screen', headerShown: false}}
+        component={Dashboard}
+      />
+      <Drawer.Screen
+        name="GroupScreenStack"
+        options={{drawerLabel: 'Group Screen', headerShown: false}}
+        component={GroupListScreen}
       />
     </Drawer.Navigator>
   );
@@ -248,24 +249,25 @@ const styles = StyleSheet.create({
     width: wp(6),
     height: wp(6),
     alignSelf: 'center',
-    tintColor: 'black',
+    tintColor: colors.white,
   },
   notiIcon: {
     width: wp(6),
     height: wp(6),
     marginLeft: 5,
-    tintColor: 'black',
+    tintColor: colors.white,
     resizeMode: 'contain',
   },
   drawerHeader: {
     flexDirection: 'row',
     width: '95%',
     justifyContent: 'space-between',
+    backgroundColor: colors.navy10,
   },
   headerIcon: {
     width: wp(6),
     height: wp(6),
-    tintColor: 'black',
+    tintColor: colors.white,
     resizeMode: 'contain',
   },
   headerTxt: {
