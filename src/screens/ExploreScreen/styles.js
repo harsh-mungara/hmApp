@@ -116,8 +116,8 @@ export const styles = StyleSheet.create({
     marginRight: wp(2),
   },
   popularImg: {
-    width: wp(40),
-    height: wp(20),
+    // width: wp(40),
+    // height: wp(20),
     borderRadius: wp(2),
     resizeMode: 'contain',
     marginBottom: hp(2),
@@ -220,7 +220,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.navyBlue10,
     height: hp(5),
     position: 'absolute',
-    bottom: 0,
+    bottom: hp(0.1),
     left: 0,
     right: 0,
     alignSelf: 'center',
@@ -251,5 +251,11 @@ export const styles = StyleSheet.create({
   },
   listStyle: {
     marginBottom: hp(10),
+  },
+  amcIcon: {
+    fontSize: wp(5),
+    color: colors.lightBlue,
+    alignSelf: 'center',
+    marginRight: wp(3),
   },
 });

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import 'react-native-gesture-handler';
 import React from 'react';
 import {View, TouchableOpacity, Image, StyleSheet, Text} from 'react-native';
@@ -16,6 +17,8 @@ import HomeScreen from '@homeScreen';
 import MovieScreen from '@movieScreen';
 import FavouriteScreen from '@favouriteScreen';
 import ExploreScreen from '@exploreScreen';
+import AMCScreen from '@amcScreen';
+import CustomIcon from '@customIcon';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -40,14 +43,14 @@ const NavigationDrawerStructure = props => {
     <View style={styles.drawerHeader}>
       <TouchableOpacity onPress={() => toggleDrawer()}>
         <Image
-          source={require('./assets/images/ic_bubblePop.png')}
+          source={require('./assets/images/applogo.png')}
           style={styles.headerIcon}
         />
       </TouchableOpacity>
       {/* <Text style={styles.headerTxt}>{'H&M App'}</Text> */}
       <View>
         <Image
-          source={require('./assets/images/notification.png')}
+          source={require('./assets/images/Bell-icon.png')}
           style={styles.notiIcon}
         />
       </View>
@@ -57,26 +60,11 @@ const NavigationDrawerStructure = props => {
 
 const tabIcon = route => {
   if (route.name === 'ExploreScreen') {
-    return (
-      <Image
-        style={styles.tabImg}
-        source={require('./assets/images/video-vertical.png')}
-      />
-    );
+    return <CustomIcon name={'Explore-Icon'} style={styles.tabIconstyle} />;
   } else if (route.name === 'Loan') {
-    return (
-      <Image
-        style={styles.tabImg}
-        source={require('./assets/images/user-octagon.png')}
-      />
-    );
+    return <CustomIcon name={'money'} style={styles.tabIconstyle} />;
   } else if (route.name === 'Profile') {
-    return (
-      <Image
-        style={styles.tabImg}
-        source={require('./assets/images/user-octagon.png')}
-      />
-    );
+    return <CustomIcon name={'Union'} style={styles.tabIconstyle} />;
   }
 };
 
@@ -85,12 +73,12 @@ const BottomTabStack = () => {
     <Tab.Navigator
       initialRouteName="ExploreScreen"
       screenOptions={({route}) => ({
-        tabBarIcon: ({}) => tabIcon(route),
-        tabBarStyle: {borderTopWidth: 1},
+        // tabBarIcon: ({}) => tabIcon(route),
+        tabBarStyle: {borderTopWidth: 1, height: hp(8)},
       })}
       tabBarOptions={{
         activeTintColor: colors.lightBlue,
-        inactiveTintColor: 'gray',
+        inactiveTintColor: colors.white,
         labelStyle: {
           textAlign: 'center',
           fontSize: wp(4),
@@ -104,6 +92,15 @@ const BottomTabStack = () => {
           headerShown: false,
           tabBarActiveBackgroundColor: colors.navy10,
           tabBarInactiveBackgroundColor: colors.navy10,
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              name={'Explore-Icon'}
+              style={[
+                styles.tabIconstyle,
+                {color: focused ? colors.lightBlue : colors.white},
+              ]}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -114,6 +111,15 @@ const BottomTabStack = () => {
           headerShown: false,
           tabBarActiveBackgroundColor: colors.navy10,
           tabBarInactiveBackgroundColor: colors.navy10,
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              name={'money'}
+              style={[
+                styles.tabIconstyle,
+                {color: focused ? colors.lightBlue : colors.white},
+              ]}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -124,6 +130,15 @@ const BottomTabStack = () => {
           headerShown: false,
           tabBarActiveBackgroundColor: colors.navy10,
           tabBarInactiveBackgroundColor: colors.navy10,
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              name={'Union'}
+              style={[
+                styles.tabIconstyle,
+                {color: focused ? colors.lightBlue : colors.white},
+              ]}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
@@ -227,6 +242,11 @@ const AuthStackNavigator = () => (
       component={MovieScreen}
       options={{gestureEnabled: false, headerShown: false}}
     />
+    <AuthStack.Screen
+      name="AMCScreen"
+      component={AMCScreen}
+      options={{gestureEnabled: false, headerShown: false}}
+    />
   </AuthStack.Navigator>
 );
 
@@ -252,28 +272,34 @@ const styles = StyleSheet.create({
     tintColor: colors.white,
   },
   notiIcon: {
-    width: wp(6),
-    height: wp(6),
-    marginLeft: 5,
-    tintColor: colors.white,
+    width: wp(10),
+    height: wp(10),
     resizeMode: 'contain',
+    alignItems: 'center',
   },
   drawerHeader: {
     flexDirection: 'row',
     width: '95%',
     justifyContent: 'space-between',
     backgroundColor: colors.navy10,
+    height: hp(8),
+    alignItems: 'flex-end',
+    paddingBottom: hp(1),
   },
   headerIcon: {
-    width: wp(6),
-    height: wp(6),
-    tintColor: colors.white,
+    width: wp(12),
+    height: wp(12),
     resizeMode: 'contain',
   },
   headerTxt: {
     fontSize: wp(5),
     color: 'black',
     marginHorizontal: wp(3),
+  },
+  tabIconstyle: {
+    fontSize: wp(5),
+    color: colors.white,
+    alignSelf: 'center',
   },
 });
 export default AppNavigator;

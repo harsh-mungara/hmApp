@@ -92,5 +92,7 @@ const colors = {
   navy100: '#3D3F49',
   blue100: '#6371FF',
   navy10: '#050A30',
+  neutral800: '#1D1E22',
+  secondary100: '#E0E3FF',
 };
 export default colors;

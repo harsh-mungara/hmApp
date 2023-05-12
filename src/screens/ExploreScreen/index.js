@@ -15,35 +15,109 @@ import {get, isEmpty} from 'lodash';
 import {imgGenerator} from '@helper/utils';
 import {styles} from './styles';
 import {Tab} from 'react-native-elements';
-import {createIconSetFromIcoMoon} from 'react-native-vector-icons';
-import icoMoonConfig from '@utils/selection.json';
-const Linericon = createIconSetFromIcoMoon(
-  icoMoonConfig,
-  'icomoon',
-  'icomoon.ttf',
-);
+import CustomIcon from '@customIcon';
 
 const AMCList = [
-  {id: 1, name: 'Aditya Birla Sun Life AMC', imageURL: ''},
-  {id: 2, name: 'Axis Asset Management Company Ltd', imageURL: ''},
-  {id: 3, name: 'ICICI Prudential AMC Ltd', imageURL: ''},
-  {id: 4, name: 'Kotak Mahindra Asset Management Company Ltd', imageURL: ''},
-  {id: 5, name: 'Motilal Oswal Asset Management Company Ltd', imageURL: ''},
-  {id: 6, name: 'Nippon Life India Asset Management Ltd', imageURL: ''},
-  {id: 7, name: 'PGIM India', imageURL: ''},
-  {id: 8, name: 'Reliance Wealth Management Ltd', imageURL: ''},
-  {id: 9, name: 'SBI Funds Management Ltd', imageURL: ''},
-  {id: 10, name: 'Sharekhan Ltd', imageURL: ''},
-  {id: 11, name: 'Aditya Birla Sun Life AMC', imageURL: ''},
-  {id: 12, name: 'Axis Asset Management Company Ltd', imageURL: ''},
-  {id: 13, name: 'ICICI Prudential AMC Ltd', imageURL: ''},
-  {id: 14, name: 'Kotak Mahindra Asset Management Company Ltd', imageURL: ''},
-  {id: 15, name: 'Motilal Oswal Asset Management Company Ltd', imageURL: ''},
-  {id: 16, name: 'Nippon Life India Asset Management Ltd', imageURL: ''},
-  {id: 17, name: 'PGIM India', imageURL: ''},
-  {id: 18, name: 'Reliance Wealth Management Ltd', imageURL: ''},
-  {id: 19, name: 'SBI Funds Management Ltd', imageURL: ''},
-  {id: 20, name: 'Sharekhan Ltd', imageURL: ''},
+  {
+    id: 1,
+    name: 'Aditya Birla Sun Life AMC',
+    imageURL: require('../../assets/images/birla.png'),
+  },
+  {
+    id: 2,
+    name: 'Axis Asset Management Company Ltd',
+    imageURL: require('../../assets/images/axis.png'),
+  },
+  {
+    id: 3,
+    name: 'ICICI Prudential AMC Ltd',
+    imageURL: require('../../assets/images/icici.png'),
+  },
+  {
+    id: 4,
+    name: 'Kotak Mahindra Asset Management Company Ltd',
+    imageURL: require('../../assets/images/kotak.png'),
+  },
+  {
+    id: 5,
+    name: 'Motilal Oswal Asset Management Company Ltd',
+    imageURL: require('../../assets/images/motilal.png'),
+  },
+  {
+    id: 6,
+    name: 'Nippon Life India Asset Management Ltd',
+    imageURL: require('../../assets/images/nippon.png'),
+  },
+  {
+    id: 7,
+    name: 'PGIM India',
+    imageURL: require('../../assets/images/pgim.png'),
+  },
+  {
+    id: 8,
+    name: 'Reliance Wealth Management Ltd',
+    imageURL: require('../../assets/images/reliance.png'),
+  },
+  {
+    id: 9,
+    name: 'SBI Funds Management Ltd',
+    imageURL: require('../../assets/images/sbi.png'),
+  },
+  {
+    id: 10,
+    name: 'Sharekhan Ltd',
+    imageURL: require('../../assets/images/sharekhan.png'),
+  },
+  {
+    id: 11,
+    name: 'Aditya Birla Sun Life AMC',
+    imageURL: require('../../assets/images/birla.png'),
+  },
+  {
+    id: 12,
+    name: 'Axis Asset Management Company Ltd',
+    imageURL: require('../../assets/images/axis.png'),
+  },
+  {
+    id: 13,
+    name: 'ICICI Prudential AMC Ltd',
+    imageURL: require('../../assets/images/icici.png'),
+  },
+  {
+    id: 14,
+    name: 'Kotak Mahindra Asset Management Company Ltd',
+    imageURL: require('../../assets/images/kotak.png'),
+  },
+  {
+    id: 15,
+    name: 'Motilal Oswal Asset Management Company Ltd',
+    imageURL: require('../../assets/images/motilal.png'),
+  },
+  {
+    id: 16,
+    name: 'Nippon Life India Asset Management Ltd',
+    imageURL: require('../../assets/images/nippon.png'),
+  },
+  {
+    id: 17,
+    name: 'PGIM India',
+    imageURL: require('../../assets/images/pgim.png'),
+  },
+  {
+    id: 18,
+    name: 'Reliance Wealth Management Ltd',
+    imageURL: require('../../assets/images/reliance.png'),
+  },
+  {
+    id: 19,
+    name: 'SBI Funds Management Ltd',
+    imageURL: require('../../assets/images/sbi.png'),
+  },
+  {
+    id: 20,
+    name: 'Sharekhan Ltd',
+    imageURL: require('../../assets/images/sharekhan.png'),
+  },
 ];
 
 class ExploreScreen extends React.Component {
@@ -93,16 +167,13 @@ class ExploreScreen extends React.Component {
       <View style={styles.renderView}>
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.navigate('MovieScreen', {
-              movieId: get(item, 'id'),
+            this.props.navigation.navigate('AMCScreen', {
+              amcId: get(item, 'id'),
+              name: get(item, 'name'),
+              imageUrl: item.imageURL,
             });
           }}>
-          <Image
-            style={styles.popularImg}
-            source={{
-              uri: imgGenerator(),
-            }}
-          />
+          <Image style={styles.popularImg} source={item.imageURL} />
         </TouchableOpacity>
         <Text style={styles.amcTitle} numberOfLines={3}>
           {get(item, 'name')}
@@ -182,7 +253,7 @@ class ExploreScreen extends React.Component {
                   style={styles.starImg}
                   source={require('../../assets/images/snack-icon.png')}
                 /> */}
-                <Linericon name="money" size={28} color="red" />
+                <CustomIcon name={'search'} style={styles.amcIcon} />
               </View>
             </View>
             <FlatList
