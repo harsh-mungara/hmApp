@@ -3,7 +3,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import colors from '../../utils/colors';
+import colors from '@utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -16,126 +16,49 @@ export const styles = StyleSheet.create({
     padding: wp(5),
     borderRadius: wp(4),
   },
-  ParentView: {
-    width: wp(45),
-    height: hp(30),
-    backgroundColor: 'white',
-    borderRadius: 5,
-    marginVertical: hp(5),
-    marginHorizontal: wp(1),
-    padding: wp(2),
-  },
-  listContainer: {
+  parentHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: wp(2),
+    justifyContent: 'space-evenly',
+    alignSelf: 'flex-start',
   },
   listImg: {
-    // width: wp(25),
-    // height: wp(20),
     borderRadius: wp(2),
     resizeMode: 'cover',
   },
-  listView: {
-    width: '100%',
-    marginLeft: wp(5),
-  },
-  listTxt: {
-    maxWidth: '70%',
-    color: 'black',
-  },
+
   deviderView: {
     width: '100%',
     height: 0.5,
-    backgroundColor: colors.white,
+    backgroundColor: colors.borderGray,
   },
-  inputView: {
-    width: '80%',
-    backgroundColor: 'white',
-    borderRadius: wp(5),
-    height: hp(6),
-    marginVertical: hp(5),
-    justifyContent: 'center',
-    padding: wp(5),
-    borderWidth: wp(0.2),
-    alignSelf: 'center',
-  },
-  inputText: {
-    height: 50,
-    color: 'black',
-  },
-  tagView: {
-    width: '20%',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: wp(5),
-    height: hp(5),
+  textView: {
+    width: '60%',
+    height: hp(0.3),
+    backgroundColor: colors.blue100,
+    marginBottom: hp(2),
   },
   tagLabel: {
     fontSize: wp(4.5),
-    fontWeight: 'bold',
     color: colors.white,
     alignSelf: 'center',
     marginHorizontal: wp(4),
     maxWidth: wp(50),
     lineHeight: hp(3),
+    fontFamily: 'Inter-Bold',
   },
   descLabel: {
     fontSize: wp(4),
     color: colors.white,
     lineHeight: hp(3),
-  },
-  seeTagLabel: {
-    fontSize: wp(3),
-  },
-  showHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    fontFamily: 'Inter-Regular',
   },
   movieTitle: {
     maxWidth: wp(50),
     fontSize: wp(5),
     fontWeight: 'bold',
   },
-  ratingText: {
-    fontSize: wp(4),
-  },
-  playText: {
-    fontSize: wp(4),
-    color: 'white',
-  },
-  starImg: {
-    width: wp(4),
-    height: hp(4),
-    tintColor: 'orange',
-    resizeMode: 'contain',
-    marginHorizontal: wp(1),
-  },
-  starView: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginVertical: hp(1),
-  },
   showingParent: {
     marginRight: wp(5),
-  },
-  popularImg: {
-    width: wp(30),
-    height: wp(40),
-    borderRadius: wp(2),
-    resizeMode: 'contain',
-    marginBottom: hp(2),
-    marginRight: wp(5),
-  },
-  thumbNailView: {
-    width: '100%',
-    height: hp(45),
-  },
-  thumbNailImg: {
-    width: '100%',
-    height: hp(45),
   },
   headerView: {
     backgroundColor: colors.navy10,
@@ -150,14 +73,13 @@ export const styles = StyleSheet.create({
   logoImg: {
     width: wp(10),
     height: wp(10),
-    alignSelf: 'center',
+    // alignSelf: 'center',
     resizeMode: 'contain',
   },
-  headerImg: {
-    width: wp('5%'),
-    height: wp('5%'),
-    tintColor: 'white',
-    alignSelf: 'center',
+  notiImg: {
+    width: wp(8),
+    height: wp(8),
+    resizeMode: 'contain',
   },
   genreView: {
     borderRadius: wp(5),
@@ -172,75 +94,9 @@ export const styles = StyleSheet.create({
     color: '#11468F',
     maxWidth: wp('18%'),
   },
-  seeView: {
-    width: '20%',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: wp(5),
-    height: hp(4),
-    borderWidth: hp(0.2),
-    borderColor: 'black',
-  },
-  descHeader: {
-    marginVertical: hp(3),
-  },
-  playView: {
-    position: 'absolute',
-    justifyContent: 'center',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,.6)',
-  },
-  playImg: {
-    width: wp(15),
-    height: wp(15),
-    tintColor: 'white',
-    resizeMode: 'contain',
-  },
-  centeredView: {
-    flex: 1,
-  },
-  descText: {
-    fontSize: wp(4),
-    lineHeight: hp(3),
-    marginVertical: hp(2),
-  },
   listParent: {
     flexGrow: 1,
     marginVertical: hp(3),
-  },
-  flexOne: {
-    flex: 1,
-  },
-  detailView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: hp(4),
-  },
-  detailText: {
-    fontSize: wp(4),
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  videoView: {
-    marginTop: hp(5),
-  },
-  vectorImg: {
-    width: wp(4),
-    height: hp(4),
-    tintColor: 'black',
-    resizeMode: 'contain',
-    marginHorizontal: wp(1),
-  },
-  flexSeven: {
-    flex: 0.7,
-  },
-  flexThree: {
-    flex: 0.3,
   },
   childContainer: {
     margin: wp(4),
@@ -261,11 +117,19 @@ export const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
   },
+  colStyle: {
+    justifyContent: 'center',
+  },
   listPieContainer: {
     flexGrow: 1,
-    // alignItems: 'center',
     width: '100%',
     justifyContent: 'space-between',
+  },
+  listYearContainer: {
+    flexGrow: 1,
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingHorizontal: wp(5),
   },
   innerView: {
     position: 'absolute',
@@ -283,10 +147,19 @@ export const styles = StyleSheet.create({
     marginHorizontal: wp(4),
     maxWidth: wp(50),
     lineHeight: hp(3),
+    fontFamily: 'Inter-SemiBold',
+  },
+  amcNumber: {
+    fontSize: wp(3.5),
   },
   amcIcon: {
     fontSize: wp(8),
     color: colors.white,
+    marginVertical: wp(1),
+  },
+  stockIcon: {
+    fontSize: wp(6),
+    color: colors.lightBlue,
     marginVertical: wp(1),
   },
   backIcon: {
@@ -299,66 +172,86 @@ export const styles = StyleSheet.create({
     color: colors.white,
     lineHeight: hp(3),
     textAlign: 'center',
-    fontWeight: 'bold',
     marginVertical: hp(2),
+    fontFamily: 'Inter-Bold',
   },
   schemeView: {
     backgroundColor: colors.neutral800,
     borderTopLeftRadius: wp(5),
     borderTopRightRadius: wp(5),
-    // borderWidth: wp(0.1),
-    // borderColor: colors.white,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
   },
+  schemeBg: {
+    backgroundColor: 'transparent',
+  },
   schemeLabelName: {
-    fontSize: wp(4.5),
+    fontSize: wp(4.3),
     color: colors.white,
     lineHeight: hp(3),
     textAlign: 'center',
-    fontWeight: 'bold',
     marginVertical: hp(2),
+    fontFamily: 'Inter-Bold',
   },
   childScheme: {
-    // borderWidth: wp(0.1),
-    // borderColor: colors.white,
     width: '100%',
   },
   childLabelName: {
-    fontSize: wp(4.5),
+    fontSize: wp(4.3),
     color: colors.secondary100,
     lineHeight: hp(3),
     textAlign: 'center',
     marginVertical: hp(2),
+    fontFamily: 'Inter-Regular',
   },
   listSchemeContainer: {
     flexGrow: 1,
-    // alignItems: 'center',
     width: '100%',
     justifyContent: 'space-between',
     borderRadius: wp(5),
     borderWidth: wp(0.1),
-    borderColor: colors.white,
+    borderColor: colors.borderGray,
   },
   objLabel: {
     fontSize: wp(5),
     color: colors.white,
     lineHeight: hp(3),
-    // textAlign: 'center',
     fontWeight: 'bold',
-    marginVertical: hp(2),
-    textDecorationLine: 'underline',
+    marginTop: hp(2),
   },
   pieView: {
     marginHorizontal: wp(4),
     marginTop: hp(3),
     alignItems: 'center',
   },
+  yearView: {
+    alignItems: 'center',
+    height: wp(7),
+    justifyContent: 'center',
+    paddingHorizontal: wp(1),
+    marginTop: hp(1),
+  },
+  yearContainer: {
+    borderRadius: wp(5),
+    borderWidth: wp(0.1),
+    borderColor: colors.secondary300,
+    backgroundColor: colors.neautral700,
+    width: wp(15),
+    borderBottomColor: colors.blue100,
+  },
+  yearTitle: {
+    color: colors.white,
+    fontSize: wp(3),
+  },
+  yearBold: {
+    fontFamily: 'Inter-Bold',
+  },
   pieTitle: {
     color: colors.white,
     marginVertical: hp(2),
     fontSize: wp(4.5),
+    fontFamily: 'Inter-SemiBold',
   },
   pieInner: {
     backgroundColor: 'transparent',
@@ -367,5 +260,46 @@ export const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  stockLabel: {
+    fontSize: wp(4),
+    color: colors.white,
+    lineHeight: hp(3),
+    fontFamily: 'Inter-Bold',
+  },
+  stockView: {
+    flexDirection: 'row',
+    backgroundColor: colors.neautral700,
+    width: '30%',
+    borderRadius: wp(5),
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: hp(2),
+    marginBottom: hp(1),
+  },
+  graphView: {
+    backgroundColor: colors.black,
+    borderRadius: wp(2),
+    borderWidth: wp(0.1),
+    borderColor: 'gray',
+    height: hp(40),
+    justifyContent: 'center',
+    marginTop: hp(3),
+  },
+  chartView: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 0,
+    backgroundColor: 'transparent',
+  },
+  barView: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: wp(5),
+    paddingRight: 0,
+    backgroundColor: 'transparent',
   },
 });

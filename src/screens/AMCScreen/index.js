@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {
   Text,
@@ -6,104 +7,37 @@ import {
   FlatList,
   ScrollView,
   Image,
-  RefreshControl,
-  Alert,
   Dimensions,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {get, isEmpty} from 'lodash';
+import {get} from 'lodash';
 import {Header} from 'react-native-elements';
 import {imgGenerator} from '@helper/utils';
 import {styles} from './styles';
 import CustomIcon from '@customIcon';
-import {LineChart, StackedBarChart} from 'react-native-chart-kit';
-import * as Progress from 'react-native-progress';
+import {BarChart, LineChart} from 'react-native-chart-kit';
 import Pie from 'react-native-pie';
-
-const descList = [
-  {
-    title: 'AUM (Cr.)',
-    number: '1457.81',
-    color: '#015390',
-    icon: 'sack-xmark',
-  },
-  {
-    title: 'As On',
-    number: '31-09-2023',
-    color: '#733201',
-    icon: 'calendar',
-  },
-  {
-    title: 'No. of Clients',
-    number: '1994',
-    color: '#6C102D',
-    icon: 'coins-solid',
-  },
-  {
-    title: 'No. of Strategy',
-    number: '1457.81',
-    color: '#736B01',
-    icon: 'stock',
-  },
-];
-
-const pieList = [
-  {
-    title: 'Large Cap',
-    number: '18.20',
-    primaryColor: '#003A65',
-    secondaryColor: '#24A1FE',
-  },
-  {
-    title: 'Mid Cap',
-    number: '37.13',
-    primaryColor: '#4C0C1F',
-    secondaryColor: '#E23F71',
-  },
-  {
-    title: 'Small Cap',
-    number: '36.90',
-    primaryColor: '#736B01',
-    secondaryColor: '#FEEE24',
-  },
-  {
-    title: 'Cash & Equivalent',
-    number: '7.77',
-    primaryColor: '#733201',
-    secondaryColor: '#FE8124',
-  },
-];
-
-const objective =
-  'The Objective of SSP is to create Long term wealth creation in focused sector where 80% portfolio will be invested  in 4 to 6 sectors with Effective screener(P-Score) to identify future winners.';
-const attributes =
-  'The investment approach is founded on four pillars. Sustainable growth over long-term in select industries, Focus on businesses and sector that consistently create value through favourable industry operating conditions.';
-const description =
-  'Aditya Birla Sun Life Asset Management Company Ltd., formerly known as Birla Sun Life Asset Management Company Limited, is an investment managing company registered under the Securities and Exchange Board of India.';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+import colors from '@utils/colors';
+import {
+  descList,
+  pieList,
+  yearList,
+  objective,
+  attributes,
+  description,
+  detailDescList,
+} from '@utils/constants';
 class AMCScreen extends React.Component {
   state = {
-    users: null,
-    videoData: [],
-    currentUserData: [],
-    fetchedUsers: null,
-    onRefresh: false,
     amcId: this.props.route.params.amcId,
     amcName: this.props.route.params.name,
-    modalVisible: false,
     hasDetail: false,
   };
 
   componentDidMount() {}
-
-  _onRefresh = async () => {
-    this.setState({onRefresh: true});
-    this.setState({onRefresh: false});
-  };
 
   renderShowing = item => {
     return (
@@ -139,7 +73,7 @@ class AMCScreen extends React.Component {
           <Text style={styles.amcTitle} numberOfLines={1}>
             {get(item, 'title')}
           </Text>
-          <Text style={styles.amcTitle} numberOfLines={2}>
+          <Text style={[styles.amcTitle, styles.amcNumber]} numberOfLines={2}>
             {get(item, 'number')}
           </Text>
         </View>
@@ -168,7 +102,7 @@ class AMCScreen extends React.Component {
         style={styles.childScheme}>
         <Text style={styles.childLabelName}>{schemeName}</Text>
         <View style={styles.deviderView} />
-        <View style={[styles.schemeView, {backgroundColor: 'transparent'}]}>
+        <View style={[styles.schemeView, styles.schemeBg]}>
           <Text style={styles.schemeLabelName}>{'7.23 %'}</Text>
           <Text style={styles.schemeLabelName}>{'36.09 %'}</Text>
           <Text style={styles.schemeLabelName}>{'8.89 %'}</Text>
@@ -206,34 +140,46 @@ class AMCScreen extends React.Component {
     );
   };
 
+  renderYear = (item, index) => {
+    return (
+      <View style={[styles.yearView, index === 2 && styles.yearContainer]}>
+        <Text style={[styles.yearTitle, index === 2 && styles.yearBold]}>
+          {get(item, 'title')}
+        </Text>
+      </View>
+    );
+  };
+
   render() {
     const chartConfig = {
-      backgroundGradientFrom: '#1E2923',
-      backgroundGradientFromOpacity: 0,
-      backgroundGradientTo: '#08130D',
-      backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-      strokeWidth: 2, // optional, default 3
-      barPercentage: 0.1,
-      useShadowColorFromDataset: false, // optional
+      backgroundGradientFrom: 'transparent',
+      backgroundGradientFromOpacity: 1,
+      backgroundGradientTo: 'transparent',
+      backgroundGradientToOpacity: 1,
+      color: (opacity = 1) => colors.lightBlue,
+      barPercentage: 1,
+      barRadius: 4,
+      useShadowColorFromDataset: false,
+      propsForBackgroundLines: {
+        strokeDasharray: '',
+        stroke: 'transparent',
+        strokeWidth: 0,
+      },
+      propsForVerticalLabels: {
+        fill: 'yellow',
+        fontSize: wp(4),
+      },
     };
     return (
       <View style={styles.container}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.onRefresh}
-              onRefresh={() => this._onRefresh()}
-            />
-          }>
+        <ScrollView>
           <Header
             containerStyle={styles.headerView}
             leftComponent={
               <TouchableOpacity
                 onPress={() => {
                   this.props.navigation.goBack();
-                }}
-                style={{width: wp(8), height: hp(3)}}>
+                }}>
                 <Image
                   style={styles.logoImg}
                   source={require('../../assets/images/applogo.png')}
@@ -247,10 +193,9 @@ class AMCScreen extends React.Component {
               <TouchableOpacity
                 onPress={() => {
                   this.props.navigation.goBack();
-                }}
-                style={{width: wp(8), height: hp(3)}}>
+                }}>
                 <Image
-                  style={styles.logoImg}
+                  style={styles.notiImg}
                   source={require('../../assets/images/Bell-icon.png')}
                 />
               </TouchableOpacity>
@@ -258,12 +203,7 @@ class AMCScreen extends React.Component {
           />
 
           <View style={styles.parentContainer}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                alignSelf: 'flex-start',
-              }}>
+            <View style={styles.parentHeader}>
               <TouchableOpacity
                 onPress={() => {
                   this.state.hasDetail
@@ -275,10 +215,6 @@ class AMCScreen extends React.Component {
                 }}
                 style={{marginRight: wp(2)}}>
                 <CustomIcon name={'arrow'} style={styles.backIcon} />
-                {/* <Image
-                  style={styles.headerImg}
-                  source={require('../../assets/images/ic_back.png')}
-                /> */}
               </TouchableOpacity>
               <Image
                 style={styles.listImg}
@@ -292,9 +228,11 @@ class AMCScreen extends React.Component {
               {this.state.hasDetail ? (
                 <>
                   <Text style={styles.objLabel}>{'Investment Objective'}</Text>
+                  <View style={styles.textView} />
                   <Text style={styles.descLabel}>{objective}</Text>
 
                   <Text style={styles.objLabel}>{'Investment Attributes'}</Text>
+                  <View style={styles.textView} />
                   <Text style={styles.descLabel}>{attributes}</Text>
                 </>
               ) : (
@@ -302,15 +240,17 @@ class AMCScreen extends React.Component {
               )}
 
               <FlatList
-                data={descList}
+                data={this.state.hasDetail ? detailDescList : descList}
                 renderItem={({item}) => this.renderAMC(item)}
                 contentContainerStyle={styles.listParentContainer}
-                columnWrapperStyle={{justifyContent: 'center'}}
+                columnWrapperStyle={styles.colStyle}
                 style={styles.listStyle}
                 keyExtractor={item => item.id}
                 numColumns={2}
               />
-              <Text style={styles.schemeLabel}>{'Schemes'}</Text>
+              {!this.state.hasDetail && (
+                <Text style={styles.schemeLabel}>{'Schemes'}</Text>
+              )}
 
               {!this.state.hasDetail && (
                 <FlatList
@@ -325,6 +265,136 @@ class AMCScreen extends React.Component {
                   }}
                 />
               )}
+
+              {this.state.hasDetail && (
+                <View style={styles.graphView}>
+                  <View style={styles.stockView}>
+                    <CustomIcon name={'stock'} style={styles.stockIcon} />
+                    <Text style={styles.stockLabel}>{'14.09%'}</Text>
+                  </View>
+                  <LineChart
+                    style={styles.chartView}
+                    data={{
+                      labels: [
+                        '1 Month',
+                        '6 Month',
+                        '1 Year',
+                        '3 Year',
+                        '5 Year',
+                      ],
+                      datasets: [
+                        {
+                          data: [
+                            80, 25, 28, 40, 49, 23, 56, 48, 59, 58, 62, 60, 28,
+                            18, 32, 34, 53, 22, 48, 49, 68, 69, 75, 89, 85, 100,
+                          ],
+                          colors: [
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                          ],
+                        },
+                      ],
+                    }}
+                    width={Dimensions.get('window').width - wp(25)}
+                    height={100}
+                    fromNumber={0}
+                    fromZero={true}
+                    chartConfig={chartConfig}
+                    showBarTops={false}
+                    showValuesOnTopOfBars={false}
+                    withHorizontalLabels={false}
+                    withCustomBarColorFromData={true}
+                    flatColor={true}
+                  />
+                  <BarChart
+                    style={styles.barView}
+                    data={{
+                      labels: [
+                        '1 Month',
+                        '6 Month',
+                        '1 Year',
+                        '3 Year',
+                        '5 Year',
+                      ],
+                      datasets: [
+                        {
+                          data: [
+                            60, 45, 98, 80, 99, 43, 63, 44, 60, 88, 45, 69, 88,
+                            45, 78, 63, 83, 48, 89, 65, 50, 99, 53, 89, 65, 12,
+                          ],
+                          colors: [
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                            () => colors.blue100,
+                          ],
+                        },
+                      ],
+                    }}
+                    width={Dimensions.get('window').width - wp(25)}
+                    height={100}
+                    fromNumber={100}
+                    chartConfig={chartConfig}
+                    showBarTops={false}
+                    showValuesOnTopOfBars={false}
+                    withHorizontalLabels={false}
+                    withCustomBarColorFromData={true}
+                    flatColor={true}
+                  />
+                  <FlatList
+                    data={yearList}
+                    horizontal
+                    renderItem={({item, index}) => this.renderYear(item, index)}
+                    contentContainerStyle={styles.listYearContainer}
+                    style={styles.listStyle}
+                    keyExtractor={item => item.id}
+                  />
+                </View>
+              )}
             </View>
 
             {this.state.hasDetail && (
@@ -332,145 +402,12 @@ class AMCScreen extends React.Component {
                 data={pieList}
                 renderItem={({item}) => this.renderPie(item)}
                 contentContainerStyle={styles.listPieContainer}
-                columnWrapperStyle={{justifyContent: 'center'}}
+                columnWrapperStyle={styles.colStyle}
                 style={styles.listStyle}
                 keyExtractor={item => item.id}
                 numColumns={2}
               />
             )}
-
-            {/* <LineChart
-              data={{
-                labels: ['1 Month', '6 Month', '1 Year', '3 Year', '5 Year'],
-                datasets: [
-                  {
-                    data: [
-                      20, 45, 28, 80, 99, 43, 23, 24, 10, 8, 5, 9, 18, 45, 78,
-                      23, 23, 28, 89, 65, 5, 99, 53, 89, 65, 12,
-                    ],
-                  },
-                ],
-              }}
-              yAxisInterval={1000}
-              xLabelsOffset={5}
-              yLabelsOffset={5000}
-              transparent={true}
-              width={screenWidth}
-              height={250}
-              verticalLabelRotation={30}
-              chartConfig={chartConfig}
-              bezier
-            /> */}
-
-            {/* <View>
-              <View style={styles.showHeader}>
-                <Text style={[styles.tagLabel, styles.flexSeven]}>
-                  {get(this, 'state.currentMovieData.title')}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => this.onSave()}
-                  style={[styles.tagView, styles.flexThree]}>
-                  <Image
-                    style={styles.vectorImg}
-                    source={require('../../assets/images/Vector.png')}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.starView}>
-                <Image
-                  style={styles.starImg}
-                  source={require('../../assets/images/ic_fancyLike.png')}
-                />
-                <Text style={styles.ratingText}>{`${
-                  Math.round(rating * 10) / 10
-                }/10 IMDB`}</Text>
-              </View>
-              <FlatList
-                data={get(this, 'state.currentMovieData.genres', [])}
-                horizontal
-                scrollEnabled
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.uid}
-                contentContainerStyle={styles.listParent}
-                style={styles.flexOne}
-                renderItem={({item}) => this.renderGenre(item)}
-              />
-
-              <View style={styles.detailView}>
-                <View style={styles.flexOne}>
-                  <Text style={styles.ratingText}>{'Length'}</Text>
-                  <Text style={styles.detailText} numberOfLines={1}>
-                    {moment
-                      .utc()
-                      .startOf('day')
-                      .add(
-                        get(this, 'state.currentMovieData.runtime', 0),
-                        'minutes',
-                      )
-                      .format('H:mm')}
-                  </Text>
-                </View>
-                <View style={styles.flexOne}>
-                  <Text style={styles.ratingText}>{'Language'}</Text>
-                  <Text style={styles.detailText} numberOfLines={1}>
-                    {get(this, 'state.currentMovieData.original_language', '-')}
-                  </Text>
-                </View>
-                <View style={styles.flexOne}>
-                  <Text style={styles.ratingText}>{'Rating'}</Text>
-                  <Text style={styles.detailText} numberOfLines={1}>
-                    {get(this, 'state.currentMovieData.imdb_id', '-')}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.descHeader}>
-                <Text style={styles.tagLabel}>{'Description'}</Text>
-                <Text style={styles.descText}>
-                  {get(this, 'state.currentMovieData.overview', '-')}
-                </Text>
-              </View>
-
-              <View style={styles.detailView}>
-                <View style={styles.flexOne}>
-                  <Text style={styles.ratingText}>{'Budget'}</Text>
-                  <Text style={styles.detailText} numberOfLines={1}>
-                    {get(this, 'state.currentMovieData.budget', 0)}
-                  </Text>
-                </View>
-                <View style={styles.flexOne}>
-                  <Text style={styles.ratingText}>{'Release Date'}</Text>
-                  <Text style={styles.detailText} numberOfLines={1}>
-                    {get(this, 'state.currentMovieData.release_date', '-')}
-                  </Text>
-                </View>
-                <View style={styles.flexOne}>
-                  <Text style={styles.ratingText}>{'Status'}</Text>
-                  <Text style={styles.detailText} numberOfLines={1}>
-                    {get(this, 'state.currentMovieData.status', '-')}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.showHeader}>
-                <Text style={styles.tagLabel}>{'Cast'}</Text>
-                <TouchableOpacity
-                  style={styles.seeView}
-                  onPress={() => Alert.alert('Will be in action soon!')}>
-                  <Text style={styles.seeTagLabel}>{'See More'}</Text>
-                </TouchableOpacity>
-              </View>
-              <FlatList
-                data={get(this, 'state.currentMovieData.cast', castData)}
-                horizontal
-                scrollEnabled
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.uid}
-                contentContainerStyle={styles.listParent}
-                style={styles.flexOne}
-                renderItem={({item}) => this.renderShowing(item)}
-              />
-            </View> */}
           </View>
         </ScrollView>
       </View>

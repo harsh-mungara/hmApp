@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import Firebase from '../../config/Firebase';
 import firebase from 'firebase/compat/app';
@@ -30,6 +31,7 @@ export default class AuthScreen extends React.Component {
     Firebase.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(async res => {
+        this.setState({isLoading: false});
         let userId = res.user.uid;
         const auth = firebase.auth().currentUser;
         // firebase.firestore().collection('users').doc(userId).set({
@@ -50,7 +52,8 @@ export default class AuthScreen extends React.Component {
         this.getNotification();
       })
       .catch(error => {
-        Alert.alert('Please Sign Up');
+        this.setState({isLoading: false});
+        Alert.alert('Oops! Something went wrong');
       });
   };
 
@@ -73,12 +76,10 @@ export default class AuthScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image
-          source={{
-            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi3BmGBVk6AshoiBA4TrUUIEoSyTGj4iY9MA&usqp=CAU',
-          }}
+          source={require('../../assets/images/appLogo-512.png')}
           style={styles.sideMenuProfileIcon}
         />
-        <Text style={styles.logo}>{'H&M App'}</Text>
+        <Text style={styles.logo}>{'Loan Against Securities'}</Text>
         <View style={styles.inputView}>
           <TextInput
             style={styles.inputText}
@@ -105,7 +106,11 @@ export default class AuthScreen extends React.Component {
         <TouchableOpacity
           onPress={() => this.handleLogin()}
           style={styles.loginBtn}>
-          <Text style={styles.loginText}>{'LOGIN'}</Text>
+          {this.state.isLoading ? (
+            <ActivityIndicator size="small" color={colors.white} />
+          ) : (
+            <Text style={styles.loginText}>{'LOGIN'}</Text>
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('SignUpScreen')}>
@@ -119,15 +124,16 @@ export default class AuthScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.black,
+    backgroundColor: colors.themebg,
     alignItems: 'center',
     // justifyContent: 'center',
   },
   logo: {
-    fontWeight: 'bold',
-    fontSize: wp(11),
-    color: '#fb5b5a',
+    // fontWeight: 'bold',
+    fontSize: wp(6),
+    color: colors.lightBlue,
     marginBottom: hp(5),
+    fontFamily: 'Inter-Bold',
   },
   inputView: {
     width: '80%',

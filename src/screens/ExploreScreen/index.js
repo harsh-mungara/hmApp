@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {
   Text,
@@ -5,127 +6,19 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  RefreshControl,
   FlatList,
   TextInput,
-  Alert,
 } from 'react-native';
 import {get, isEmpty} from 'lodash';
-
-import {imgGenerator} from '@helper/utils';
 import {styles} from './styles';
 import {Tab} from 'react-native-elements';
 import CustomIcon from '@customIcon';
-
-const AMCList = [
-  {
-    id: 1,
-    name: 'Aditya Birla Sun Life AMC',
-    imageURL: require('../../assets/images/birla.png'),
-  },
-  {
-    id: 2,
-    name: 'Axis Asset Management Company Ltd',
-    imageURL: require('../../assets/images/axis.png'),
-  },
-  {
-    id: 3,
-    name: 'ICICI Prudential AMC Ltd',
-    imageURL: require('../../assets/images/icici.png'),
-  },
-  {
-    id: 4,
-    name: 'Kotak Mahindra Asset Management Company Ltd',
-    imageURL: require('../../assets/images/kotak.png'),
-  },
-  {
-    id: 5,
-    name: 'Motilal Oswal Asset Management Company Ltd',
-    imageURL: require('../../assets/images/motilal.png'),
-  },
-  {
-    id: 6,
-    name: 'Nippon Life India Asset Management Ltd',
-    imageURL: require('../../assets/images/nippon.png'),
-  },
-  {
-    id: 7,
-    name: 'PGIM India',
-    imageURL: require('../../assets/images/pgim.png'),
-  },
-  {
-    id: 8,
-    name: 'Reliance Wealth Management Ltd',
-    imageURL: require('../../assets/images/reliance.png'),
-  },
-  {
-    id: 9,
-    name: 'SBI Funds Management Ltd',
-    imageURL: require('../../assets/images/sbi.png'),
-  },
-  {
-    id: 10,
-    name: 'Sharekhan Ltd',
-    imageURL: require('../../assets/images/sharekhan.png'),
-  },
-  {
-    id: 11,
-    name: 'Aditya Birla Sun Life AMC',
-    imageURL: require('../../assets/images/birla.png'),
-  },
-  {
-    id: 12,
-    name: 'Axis Asset Management Company Ltd',
-    imageURL: require('../../assets/images/axis.png'),
-  },
-  {
-    id: 13,
-    name: 'ICICI Prudential AMC Ltd',
-    imageURL: require('../../assets/images/icici.png'),
-  },
-  {
-    id: 14,
-    name: 'Kotak Mahindra Asset Management Company Ltd',
-    imageURL: require('../../assets/images/kotak.png'),
-  },
-  {
-    id: 15,
-    name: 'Motilal Oswal Asset Management Company Ltd',
-    imageURL: require('../../assets/images/motilal.png'),
-  },
-  {
-    id: 16,
-    name: 'Nippon Life India Asset Management Ltd',
-    imageURL: require('../../assets/images/nippon.png'),
-  },
-  {
-    id: 17,
-    name: 'PGIM India',
-    imageURL: require('../../assets/images/pgim.png'),
-  },
-  {
-    id: 18,
-    name: 'Reliance Wealth Management Ltd',
-    imageURL: require('../../assets/images/reliance.png'),
-  },
-  {
-    id: 19,
-    name: 'SBI Funds Management Ltd',
-    imageURL: require('../../assets/images/sbi.png'),
-  },
-  {
-    id: 20,
-    name: 'Sharekhan Ltd',
-    imageURL: require('../../assets/images/sharekhan.png'),
-  },
-];
-
+import {AMCList} from '@utils/constants';
 class ExploreScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       amcList: AMCList,
-      onRefresh: false,
       refreshKey: new Date().getTime(),
       index: 0,
       isAll: false,
@@ -133,12 +26,6 @@ class ExploreScreen extends React.Component {
   }
 
   componentDidMount() {}
-
-  _onRefresh = async () => {
-    this.setState({onRefresh: true});
-    // await this.getMovies();
-    this.setState({onRefresh: false});
-  };
 
   filteredAMC = search => {
     const lowSearch = search.toLowerCase().trim();
@@ -193,29 +80,25 @@ class ExploreScreen extends React.Component {
           onChange={e => this.setState({index: e})}
           indicatorStyle={styles.tabIndi}>
           <Tab.Item
-            title="Mutual Funds"
+            title={'Mutual Funds'}
             iconPosition="left"
-            titleStyle={{fontSize: 12}}
-            containerStyle={{backgroundColor: 'transparent'}}
-            icon={{name: 'timer', type: 'ionicon', color: 'white'}}
+            titleStyle={styles.tabLabel}
+            containerStyle={styles.tabBg}
+            icon={() => {
+              return <CustomIcon name={'funds'} style={styles.tabIcon} />;
+            }}
           />
           <Tab.Item
             title="Stocks"
             iconPosition="left"
-            titleStyle={{fontSize: 12}}
-            containerStyle={{backgroundColor: 'transparent'}}
-            icon={{name: 'heart', type: 'ionicon', color: 'white'}}
+            titleStyle={styles.tabLabel}
+            containerStyle={styles.tabBg}
+            icon={() => {
+              return <CustomIcon name={'stocks'} style={styles.tabIcon} />;
+            }}
           />
         </Tab>
-        <ScrollView
-          contentContainerStyle={{flex: 1}}
-          // refreshControl={
-          //   <RefreshControl
-          //     refreshing={this.state.onRefresh}
-          //     onRefresh={() => this._onRefresh()}
-          //   />
-          // }
-        >
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           {!this.state.isAll && (
             <View style={styles.portoHeader}>
               <View style={styles.portoParent}>
@@ -234,9 +117,9 @@ class ExploreScreen extends React.Component {
                 {this.state.isAll && (
                   <TouchableOpacity
                     onPress={() => this.setState({isAll: false})}>
-                    <Image
-                      style={styles.backImg}
-                      source={require('../../assets/images/ic_back.png')}
+                    <CustomIcon
+                      name={'arrow'}
+                      style={[styles.amcIcon, styles.backStyle]}
                     />
                   </TouchableOpacity>
                 )}
@@ -249,10 +132,6 @@ class ExploreScreen extends React.Component {
                   onChangeText={text => this.filteredAMC(text)}
                   placeholderTextColor={'white'}
                 />
-                {/* <Image
-                  style={styles.starImg}
-                  source={require('../../assets/images/snack-icon.png')}
-                /> */}
                 <CustomIcon name={'search'} style={styles.amcIcon} />
               </View>
             </View>
@@ -260,18 +139,19 @@ class ExploreScreen extends React.Component {
               data={amcList}
               renderItem={({item}) => this.renderAMC(item)}
               contentContainerStyle={styles.listParentContainer}
-              // columnWrapperStyle={{justifyContent: 'center'}}
               style={styles.listStyle}
               keyExtractor={item => item.id}
               numColumns={2}
             />
           </View>
           {!this.state.isAll && (
-            <TouchableOpacity
-              onPress={() => this.setState({isAll: true})}
-              style={styles.footerView}>
-              <Text style={styles.footerTxt}>{'See All AMC'}</Text>
-            </TouchableOpacity>
+            <View style={styles.footerParent}>
+              <TouchableOpacity
+                onPress={() => this.setState({isAll: true})}
+                style={styles.footerView}>
+                <Text style={styles.footerTxt}>{'See All AMC'}</Text>
+              </TouchableOpacity>
+            </View>
           )}
         </ScrollView>
       </View>

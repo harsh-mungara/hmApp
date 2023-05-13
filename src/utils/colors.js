@@ -94,5 +94,9 @@ const colors = {
   navy10: '#050A30',
   neutral800: '#1D1E22',
   secondary100: '#E0E3FF',
+  secondary300: '#A1AAFF',
+  neautral700: '#2F3038',
+  navy200: '#0e0f1f',
+  borderGray: '#353740',
 };
 export default colors;

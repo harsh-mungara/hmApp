@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../utils/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
@@ -24,18 +28,21 @@ const SplashScreen = () => {
           routes: [{name: 'SignUpScreen'}],
         });
       }
-    }, 100);
+    }, 200);
   }, []);
 
   return (
     <View style={styles.flexContainer}>
       <LinearGradient
-        colors={[colors.gradientColor1, colors.gradientColor2]}
+        colors={[colors.themebg, colors.lightBlue]}
         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}}
         style={styles.linearGradient}>
         <View>
-          <Text style={styles.splashFont}>H&M App</Text>
+          <Image
+            source={require('../assets/images/appLogo-512.png')}
+            style={styles.sideMenuProfileIcon}
+          />
         </View>
       </LinearGradient>
     </View>
@@ -61,6 +68,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 5,
     elevation: 10,
+  },
+
+  sideMenuProfileIcon: {
+    resizeMode: 'contain',
+    width: wp(50),
+    height: hp(15),
+    borderRadius: 15,
+    alignSelf: 'center',
+    marginVertical: hp(2),
   },
 });
 export default SplashScreen;

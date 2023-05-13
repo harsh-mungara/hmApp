@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  View,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -18,9 +19,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {get} from 'lodash';
-import Realm from 'realm';
-
-let realm;
+import colors from '@utils/colors';
 
 const CustomDrawerScreen = props => {
   const navigation = useNavigation();
@@ -33,10 +32,6 @@ const CustomDrawerScreen = props => {
       const username = get(userdata, 'email');
       setUsername(username);
     };
-    realm = new Realm({
-      path: 'UserDatabase.realm',
-      deleteRealmIfMigrationNeeded: true,
-    });
 
     fetchData();
   }, [username]);
@@ -44,15 +39,12 @@ const CustomDrawerScreen = props => {
   const onLogout = () => {
     Alert.alert(
       'Logout!',
-      'Your all favourite item will be removed from the list!.',
+      'Your all saved item will be removed!.',
       [
         {
           text: 'Ok',
           onPress: async () => {
             await AsyncStorage.removeItem('userData');
-            realm.write(() => {
-              realm.deleteAll();
-            });
             navigation.reset({
               index: 0,
               routes: [{name: 'AuthStack'}],
@@ -70,12 +62,12 @@ const CustomDrawerScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={{
-          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi3BmGBVk6AshoiBA4TrUUIEoSyTGj4iY9MA&usqp=CAU',
-        }}
-        style={styles.sideMenuProfileIcon}
-      />
+      <View style={styles.headerView}>
+        <Image
+          source={require('../assets/images/appLogo-512.png')}
+          style={styles.sideMenuProfileIcon}
+        />
+      </View>
       <DrawerContentScrollView {...props}>
         <Text style={styles.emailView}>{username}</Text>
 
@@ -83,7 +75,7 @@ const CustomDrawerScreen = props => {
         <TouchableOpacity
           onPress={async () => onLogout()}
           style={styles.customItem}>
-          <Text style={styles.footerView}>Log out</Text>
+          <Text style={styles.footerView}>{'Log out'}</Text>
         </TouchableOpacity>
       </DrawerContentScrollView>
     </SafeAreaView>
@@ -94,10 +86,11 @@ const styles = StyleSheet.create({
   sideMenuProfileIcon: {
     resizeMode: 'contain',
     width: wp(50),
-    height: hp(15),
+    height: wp(30),
     borderRadius: 15,
     alignSelf: 'center',
     marginVertical: hp(2),
+    backgroundColor: colors.themebg,
   },
   iconStyle: {
     width: 15,
@@ -110,15 +103,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emailView: {
-    color: 'gray',
+    color: colors.black,
     marginHorizontal: wp(5),
     marginVertical: hp(2),
   },
   container: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   footerView: {
-    color: 'gray',
+    color: colors.black,
+  },
+  headerView: {
+    backgroundColor: colors.themebg,
   },
 });
 

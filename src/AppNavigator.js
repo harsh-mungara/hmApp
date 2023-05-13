@@ -13,9 +13,6 @@ import ChatScreen from '@chatScreen';
 import GroupListScreen from '@groupListScreen';
 import CreateGroup from '@groupListScreen/CreateGroup';
 import GroupChatScreen from '@groupChatScreen';
-import HomeScreen from '@homeScreen';
-import MovieScreen from '@movieScreen';
-import FavouriteScreen from '@favouriteScreen';
 import ExploreScreen from '@exploreScreen';
 import AMCScreen from '@amcScreen';
 import CustomIcon from '@customIcon';
@@ -82,6 +79,7 @@ const BottomTabStack = () => {
         labelStyle: {
           textAlign: 'center',
           fontSize: wp(4),
+          fontFamily: 'Inter-SemiBold',
         },
       }}>
       <Tab.Screen
@@ -171,11 +169,7 @@ const HomeScreenStack = ({navigation}) => {
 const DrawerStack = () => {
   return (
     <Drawer.Navigator
-      drawerContent={props => <CustomDrawerScreen {...props} />}
-      drawerContentOptions={{
-        activeTintColor: '#e91e63',
-        itemStyle: {marginVertical: 5},
-      }}>
+      drawerContent={props => <CustomDrawerScreen {...props} />}>
       <Drawer.Screen
         name="HomeScreenStack"
         options={{drawerLabel: 'Home Screen', headerShown: false}}
@@ -183,7 +177,10 @@ const DrawerStack = () => {
       />
       <Drawer.Screen
         name="ChatScreenStack"
-        options={{drawerLabel: 'Chat Screen', headerShown: false}}
+        options={{
+          drawerLabel: 'Chat Screen',
+          headerShown: false,
+        }}
         component={Dashboard}
       />
       <Drawer.Screen
@@ -238,11 +235,6 @@ const AuthStackNavigator = () => (
       options={{gestureEnabled: false, headerShown: false}}
     />
     <AuthStack.Screen
-      name="MovieScreen"
-      component={MovieScreen}
-      options={{gestureEnabled: false, headerShown: false}}
-    />
-    <AuthStack.Screen
       name="AMCScreen"
       component={AMCScreen}
       options={{gestureEnabled: false, headerShown: false}}
@@ -272,8 +264,8 @@ const styles = StyleSheet.create({
     tintColor: colors.white,
   },
   notiIcon: {
-    width: wp(10),
-    height: wp(10),
+    width: wp(8),
+    height: wp(8),
     resizeMode: 'contain',
     alignItems: 'center',
   },
@@ -287,8 +279,8 @@ const styles = StyleSheet.create({
     paddingBottom: hp(1),
   },
   headerIcon: {
-    width: wp(12),
-    height: wp(12),
+    width: wp(10),
+    height: wp(10),
     resizeMode: 'contain',
   },
   headerTxt: {
